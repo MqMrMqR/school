@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التواصل مع الموظف فيصل فهد</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet">  
+
+    <style>
+        body {
+            background-color: #FFFFFF;
+            color: black;
+            font-family: "Tajawal", serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .header {
+            width: 100%;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 36px;
+            font-weight: bold;
+            border-bottom: 1px solid rgba(140, 122, 102, 0.3);
+        }
+        .container {
+            text-align: center;
+            margin-top: 50px;
+            width: 50%;
+        }
+        .form-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        label {
+            font-size: 20px;
+            font-weight: bold;
+            color: #8C7A66;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            font-size: 18px;
+            border: 2px solid #8C7A66;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .button {
+            background-color: #FFFFFF;
+            color: #8C7A66;
+            font-family: "Tajawal", serif;
+            font-size: 20px;
+            padding: 15px 30px;
+            border: 2px solid #8C7A66;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        .button:hover {
+            background-color: #8C7A66;
+            color: #FFFFFF;
+            transform: scale(1.05);
+        }
+        .toggle-button {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: "Tajawal", serif;
+            border: 2px solid #8C7A66;
+            border-radius: 5px;
+            background-color: #FFFFFF;
+            color: #8C7A66;
+            transition: all 0.3s ease;
+        }
+        .toggle-button:hover {
+            background-color: #8C7A66;
+            color: #FFFFFF;
+        }
+        .full-view .form-step {
+            display: flex !important;
+        }
+
+        .full-view .form-step .button {
+            display: none;
+        }
+
+        .full-view .form-step .submit {
+            display: block;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="header">التواصل مع الموظف فيصل فهد</div>
+    <button class="toggle-button" onclick="toggleView()">تبديل العرض</button>
+    <div class="container" id="survey-container">
+        <div id="step1" class="form-step">
+            <label>:الاسم</label>
+            <input type="text" placeholder=" مثال: فيصل فهد الدحمان " required>
+            <button class="button next" onclick="nextStep(2)">التالي</button>
+        </div>
+        <div id="step2" class="form-step" style="display: none;">
+            <label>:العمر</label>
+            <input type="number" placeholder=" مثال: 53 ">
+            <button class="button next" onclick="nextStep(3)">التالي</button>
+            <button class="button prev" onclick="prevStep(1)">السابق</button>
+        </div>
+        <div id="step3" class="form-step" style="display: none;">
+            <label>:الجنس</label>
+            <select>
+                <option>ذكر</option>
+                <option>أنثى</option>
+                <option>حيوان</option>
+            </select>
+            <button class="button next" onclick="nextStep(4)">التالي</button>
+            <button class="button prev" onclick="prevStep(2)">السابق</button>
+        </div>
+        <div id="step4" class="form-step" style="display: none;">
+            <label>:البريد الألكتروني</label>
+            <input type="email" placeholder=" AliOnTop@gmail.com :مثال ">
+            <button class="button next" onclick="nextStep(5)">التالي</button>
+            <button class="button prev" onclick="prevStep(3)">السابق</button>
+        </div>
+        <div id="step5" class="form-step" style="display: none;">
+            <label>:الرسالة</label>
+            <input type="textarea" placeholder=" مثال: يا علي انت افضل واحد ">
+            <button class="button submit" onclick="submitSurvey()">إرسال</button>
+            <button class="button prev" onclick="prevStep(4)">السابق</button>
+        </div>
+
+    </div>
+    <script>
+        let currentStep = 1;
+        let isFullView = false;
+        
+        function nextStep(step) {
+
+            if (currentStep === 1 && document.querySelector('input[type="text"]').value === "")
+             {
+              alert("الرجاء إدخال اسمك");
+              return;  // لا يتم الانتقال إلى الخطوة التالية إذا لم يتم إدخال الاسم
+             }
+
+             if (currentStep === 2 && document.querySelector('input[type="number"]').value === "")
+             {
+              alert("الرجاء إدخال عمرك");
+              return;  // لا يتم الانتقال إلى الخطوة التالية إذا لم يتم إدخال العمر
+             }
+
+             if (currentStep === 4) {
+                 let emailInput = document.querySelector('input[type="email"]');
+                 let emailValue = emailInput.value;
+    
+                 // التحقق من أن البريد الإلكتروني ليس فارغًا وأنه بتنسيق صحيح
+                let emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    
+                 if (emailValue === "" || !emailPattern.test(emailValue)) {
+                   alert("الرجاء إدخال بريد إلكتروني صالح");
+                 return;  // لا يتم الانتقال إلى الخطوة التالية إذا لم يتم إدخال بريد إلكتروني صالح
+                }
+}
+
+
+
+            document.getElementById(`step${currentStep}`).style.display = 'none';
+            document.getElementById(`step${step}`).style.display = 'flex';
+            currentStep = step;
+        }
+        function prevStep(step) {
+            document.getElementById(`step${currentStep}`).style.display = 'none';
+            document.getElementById(`step${step}`).style.display = 'flex';
+            currentStep = step;
+        }
+        function submitSurvey() {
+
+            alert("تم إرسال الاستبيان بنجاح!");
+        }
+        function toggleView() {
+            isFullView = !isFullView;
+            let container = document.getElementById('survey-container');
+            if (isFullView) {
+                container.classList.add('full-view');
+                document.querySelectorAll('.form-step').forEach(step => step.style.display = 'flex');
+            } else {
+                container.classList.remove('full-view');
+                document.querySelectorAll('.form-step').forEach(step => step.style.display = 'none');
+                document.getElementById(`step${currentStep}`).style.display = 'flex';
+            }
+        }
+    </script>
+</body>
+</html>
