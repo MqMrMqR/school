@@ -146,6 +146,11 @@
     </div>
 
     <script>
+
+window.onload = function() {
+    alert("! للمعلوميه !\nسيتم حفظ نماذج الاستبيان في google sheets");
+};
+
         let currentStep = 1;
         let isFullView = false;
 
@@ -208,7 +213,7 @@
 
             alert("تم ارسال الاستبيان بنجاح!\nسيتم توجيهك على Google Sheets لرؤية استبيانك");
 
-            window.open("https://docs.google.com/spreadsheets/d/1ceD39R5Pwnu9pFLeAVO11dLFzxbJ-4EenT3RbKacLf8/edit?usp=sharing", "_blank");  // قم بوضع رابط الـ Google Sheets هنا
+            window.open("https://docs.google.com/spreadsheets/d/1ceD39R5Pwnu9pFLeAVO11dLFzxbJ-4EenT3RbKacLf8/edit?usp=sharing", "_blank");  
             sendSurvey();
         }
 
@@ -243,7 +248,7 @@
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                mode: 'no-cors'  // إضافة هذا
+                mode: 'no-cors'  
 
             })
             .then(response => response.json())
