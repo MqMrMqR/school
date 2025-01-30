@@ -45,13 +45,18 @@
             font-weight: bold;
             color: #8C7A66;
         }
-        input, select {
+        input, select, textarea  {
             width: 100%;
             padding: 10px;
             font-size: 18px;
+            font-family: "Tajawal", serif;
             border: 2px solid #8C7A66;
             border-radius: 10px;
             text-align: center;
+            transition: all 0.3s ease;
+        }
+        input:focus, select:focus, textarea:focus {
+            transform: scale(1.1);
         }
         .button {
             background-color: #FFFFFF;
@@ -82,23 +87,22 @@
             background-color: #FFFFFF;
             color: #8C7A66;
             transition: all 0.3s ease;
+            margin-top: 10px;
         }
         .toggle-button:hover {
             background-color: #8C7A66;
             color: #FFFFFF;
+            transform: scale(1.05);
         }
         .full-view .form-step {
             display: flex !important;
         }
-
         .full-view .form-step .button {
             display: none;
         }
-
         .full-view .form-step .submit {
             display: block;
         }
-
     </style>
 </head>
 
@@ -108,18 +112,18 @@
     <div class="container" id="survey-container">
         <div id="step1" class="form-step">
             <label>:الاسم</label>
-            <input type="text" placeholder=" مثال: فيصل فهد الدحمان " required>
+            <input type="text" id="name" placeholder=" مثال: فيصل فهد الدحمان " required>
             <button class="button next" onclick="nextStep(2)">التالي</button>
         </div>
         <div id="step2" class="form-step" style="display: none;">
             <label>:العمر</label>
-            <input type="number" placeholder=" مثال: 53 ">
+            <input type="number" id="age" placeholder=" مثال: 53 ">
             <button class="button next" onclick="nextStep(3)">التالي</button>
             <button class="button prev" onclick="prevStep(1)">السابق</button>
         </div>
         <div id="step3" class="form-step" style="display: none;">
             <label>:الجنس</label>
-            <select>
+            <select id="gender">
                 <option>ذكر</option>
                 <option>أنثى</option>
                 <option>حيوان</option>
@@ -129,64 +133,85 @@
         </div>
         <div id="step4" class="form-step" style="display: none;">
             <label>:البريد الألكتروني</label>
-            <input type="email" placeholder=" AliOnTop@gmail.com :مثال ">
+            <input type="email" id="email" placeholder=" AliOnTop@gmail.com :مثال ">
             <button class="button next" onclick="nextStep(5)">التالي</button>
             <button class="button prev" onclick="prevStep(3)">السابق</button>
         </div>
         <div id="step5" class="form-step" style="display: none;">
             <label>:الرسالة</label>
-            <input type="textarea" placeholder=" مثال: يا علي انت افضل واحد ">
+            <textarea id="message" placeholder=" مثال: يا علي انت افضل واحد "></textarea>
             <button class="button submit" onclick="submitSurvey()">إرسال</button>
             <button class="button prev" onclick="prevStep(4)">السابق</button>
         </div>
-
     </div>
+
     <script>
         let currentStep = 1;
         let isFullView = false;
-        
+
         function nextStep(step) {
+            if (currentStep === 1 && document.querySelector('input[type="text"]').value === "") {
+                alert("الرجاء إدخال اسمك");
+                return;
+            }
+            if (currentStep === 2 && document.querySelector('input[type="number"]').value === "") {
+                alert("الرجاء إدخال عمرك");
+                return;
+            }
+            if (currentStep === 4) {
+                let emailInput = document.querySelector('input[type="email"]');
+                let emailValue = emailInput.value;
 
-            if (currentStep === 1 && document.querySelector('input[type="text"]').value === "")
-             {
-              alert("الرجاء إدخال اسمك");
-              return;  // لا يتم الانتقال إلى الخطوة التالية إذا لم يتم إدخال الاسم
-             }
-
-             if (currentStep === 2 && document.querySelector('input[type="number"]').value === "")
-             {
-              alert("الرجاء إدخال عمرك");
-              return;  // لا يتم الانتقال إلى الخطوة التالية إذا لم يتم إدخال العمر
-             }
-
-             if (currentStep === 4) {
-                 let emailInput = document.querySelector('input[type="email"]');
-                 let emailValue = emailInput.value;
-    
-                 // التحقق من أن البريد الإلكتروني ليس فارغًا وأنه بتنسيق صحيح
                 let emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    
-                 if (emailValue === "" || !emailPattern.test(emailValue)) {
-                   alert("الرجاء إدخال بريد إلكتروني صالح");
-                 return;  // لا يتم الانتقال إلى الخطوة التالية إذا لم يتم إدخال بريد إلكتروني صالح
+
+                if (emailValue === "" || !emailPattern.test(emailValue)) {
+                    alert("الرجاء إدخال بريد إلكتروني صالح");
+                    return;
                 }
-}
-
-
+            }
 
             document.getElementById(`step${currentStep}`).style.display = 'none';
             document.getElementById(`step${step}`).style.display = 'flex';
             currentStep = step;
         }
+
         function prevStep(step) {
             document.getElementById(`step${currentStep}`).style.display = 'none';
             document.getElementById(`step${step}`).style.display = 'flex';
             currentStep = step;
         }
-        function submitSurvey() {
 
-            alert("تم إرسال الاستبيان بنجاح!");
+        function submitSurvey() {
+            let name = document.querySelector('input[type="text"]').value.trim();
+            let age = document.querySelector('input[type="number"]').value.trim();
+            let email = document.querySelector('input[type="email"]').value.trim();
+            let message = document.querySelector('textarea').value.trim();
+
+            let emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+
+            if (name === "") {
+                alert("الرجاء إدخال اسمك");
+                return;
+            }
+            if (age === "") {
+                alert("الرجاء إدخال عمرك");
+                return;
+            }
+            if (email === "" || !emailPattern.test(email)) {
+                alert("الرجاء إدخال بريد إلكتروني صالح");
+                return;
+            }
+            if (message === "") {
+                alert("الرجاء إدخال رسالتك");
+                return;
+            }
+
+            alert("تم ارسال الاستبيان بنجاح!\nسيتم توجيهك على Google Sheets لرؤية استبيانك");
+
+            window.open("https://docs.google.com/spreadsheets/d/1x4k-FWndWNmJvgGK0a-EQ9wco7nkQ8k415iNtK8d0jw/edit?usp=sharing", "_blank");  // قم بوضع رابط الـ Google Sheets هنا
+            sendSurvey();
         }
+
         function toggleView() {
             isFullView = !isFullView;
             let container = document.getElementById('survey-container');
@@ -198,6 +223,32 @@
                 document.querySelectorAll('.form-step').forEach(step => step.style.display = 'none');
                 document.getElementById(`step${currentStep}`).style.display = 'flex';
             }
+        }
+
+        function sendSurvey() {
+            var data = {
+                name: document.getElementById("name").value,
+                age: document.getElementById("age").value,
+                gender: document.getElementById("gender").value,
+                email: document.getElementById("email").value,
+                message: document.getElementById("message").value
+            };
+
+            var scriptURL = 'https://script.google.com/macros/s/AKfycbwG0fL2tl9M8sdYCcQvmzrA2nKjukXOBz2-n1IfGclIky3AtOwnuFBS_3IJPHHdzIaD/exec';
+            
+            fetch(scriptURL, {
+                method: 'POST',
+                
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                mode: 'no-cors'  // إضافة هذا
+
+            })
+            .then(response => response.json())
+            .then(data => console.log('Success:', data))
+            .catch(error => console.error('Error:', error));
         }
     </script>
 </body>
