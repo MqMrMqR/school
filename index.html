@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> التقنية الرقمية </title>
 
+    <!-- الخط -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet">  
-      <style>
 
+    <!-- ال css البسيط-->
+    <style>
         body {
             background-color: #FFFFFF;
             color: black;
@@ -30,6 +32,11 @@
             border-bottom: 1px solid rgba(140, 122, 102, 0.3);
             position: absolute;
             top: 0;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .header:hover {
+            color: #8C7A66;
         }
         .container {
             text-align: center;
@@ -55,9 +62,19 @@
             transform: scale(1.05);
         }
     </style>
+
+<!-- الرساله  -->
+<script>
+    window.onload = function() {
+        alert("الاختبار العملي النهائي لمادة المهارات الرقمية\nيضم 3 أشخاص في موقع واحد\nلرؤية ملفات المشروع يرجى الضغط على العنوان \"التقنية الرقمية\"");
+    };
+</script>
+
 </head>
+
+
 <body>
-    <div class="header"> التقنية الرقمية </div>
+    <div class="header" onclick="window.open('https://github.com/MqMrMqR/school', '_blank')"> التقنية الرقمية </div>
     <div class="container">
         <div class="buttons">
             <button class="button" onclick="location.href='LightTrash.html'">فيصل فهد الدحمان</button>
